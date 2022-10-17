@@ -1,0 +1,218 @@
+﻿<Window x:Class="ProductStorage_WPF_Dapper.MVVM.Views.EditProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductStorage_WPF_Dapper.MVVM.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Icon="https://res.cloudinary.com/kysbv/image/upload/v1665927551/General/storage_icon.png" 
+        AllowsTransparency="True" mc:Ignorable="d" ResizeMode="NoResize" Background="Transparent" 
+        WindowStyle="None"  WindowStartupLocation="CenterScreen"
+        Title="AddDriver" Height="800" Width="850">
+    <Border CornerRadius="15" BorderThickness="0.3" Background="{StaticResource Main_Color}" Padding="0">
+        <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--#region Ttle Bar -->
+
+            <Border Background="{StaticResource TitleBarColor}" CornerRadius="15 15 0 0" Grid.Row="0" Height="25" MouseDown="Border_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width  ="45"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+
+                    <Image Grid.Column="0" Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20 0 5 0"
+                 Source="https://res.cloudinary.com/kysbv/image/upload/v1665927551/General/storage_icon.png"/>
+
+                    <Label Grid.Column="1" Foreground="{StaticResource WhiteForegroundColor}" Margin="2 0"  FontWeight="SemiBold" Content="Edit Product"/>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Background="Transparent" BorderThickness="0" Width="40" Foreground="{StaticResource WhiteForegroundColor}" VerticalAlignment="Center" Content="_" Padding="0 0 0 8" Height="25" Click="ResizeButton_Click" />
+
+                        <Button Background="Transparent" BorderThickness="0" Width="40" Height="25" Foreground="DarkRed" FontSize="10" VerticalAlignment="Center" Content="X" FontWeight="Bold" Click="ResizeButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!--#endregion-->
+
+            <!--#region InputArea-->
+
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <!--#region ProductInfo-->
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition Height="1.23*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--#region Profile Photo -->
+
+                    <Grid Grid.Row="0" >
+
+                        <Button Style="{StaticResource MaterialDesignPaperDarkButton}" Margin="20 0"  VerticalAlignment="Center"
+                    Background="Transparent" Foreground="Aqua" Width="200" HorizontalAlignment="Left" Name="BrowsePP" 
+                    Command="{Binding BrowseImage}">
+                            <StackPanel Orientation="Horizontal" >
+                                <materialDesign:PackIcon Kind="FileSearch" VerticalAlignment="Center" Foreground="Aqua"/>
+                                <TextBlock Margin="15 0">Browse</TextBlock>
+                            </StackPanel>
+                        </Button>
+
+
+
+
+                        <Border  Height="54" Width="64" Padding="0" Margin="0 5" CornerRadius="100" Grid.Row="0">
+                            <Ellipse>
+                                <Ellipse.Fill >
+
+                                    <ImageBrush  Stretch="Fill" x:Name="ProductImage"
+                                              ImageSource="{Binding Product.ImageSource,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Border>
+
+
+                    </Grid>
+
+                    <!--#endregion-->
+
+                    <!--#region Name -->
+
+                    <Label Content="Name ~ " Foreground="#60686c" FontSize="20" FontFamily="Lucida Console" Grid.Row="1"
+                      VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Heavy" Margin="10 0"/>
+
+                    <TextBox Text="{Binding Product.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Foreground="#b3b3b3" FontSize="20" FontFamily="Lucida Console" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" TextWrapping="Wrap" Grid.Row="1" MaxLength="50"
+                      Name="Name" TextChanged="Name_TextChanged" MinWidth="100"/>
+
+                    <!--#endregion-->
+
+                    <!--#region OriginCountry -->
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" >
+
+                        <ComboBox x:Name="CountryComboBox" Height="40" materialDesign:HintAssist.Hint="Country" HorizontalAlignment="Left" 
+                    Foreground="Aqua" Margin="10 0" MinWidth="120"
+                    Style="{StaticResource ComboBoxFlatStyle}" BorderBrush="#FF512DA8" Background="#2c2b3f" SelectionChanged="CountryComboBox_SelectionChanged" />
+
+                        <Border Grid.Row="2" HorizontalAlignment="Center" Background="Transparent" CornerRadius="5" Panel.ZIndex="2" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Margin="10 0 0 0" Background="Transparent">
+                                <Ellipse  Height="50" Width="50">
+                                    <Ellipse.Fill>
+                                        <ImageBrush x:Name="Flag" Stretch="Fill"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </StackPanel>
+                        </Border>
+
+                        <Label Content="" Foreground="#b3b3b3" FontSize="20" FontFamily="Lucida Console" Grid.Row="2" Name="CountryName" 
+                      VerticalContentAlignment="Center" HorizontalAlignment="Right" FontWeight="Heavy" Margin="10 0"/>
+
+                    </StackPanel>
+
+
+
+                    <!--#endregion-->
+
+                    <!--#region Price -->
+
+                    <Label Content="Price ~ " Foreground="#60686c" FontSize="20" FontFamily="Lucida Console" Grid.Row="3"
+                      VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Heavy" Margin="10 0"/>
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                        <TextBox Foreground="#b3b3b3" FontSize="20" FontFamily="Lucida Console" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" TextWrapping="Wrap" 
+                      Name="Price" TextChanged="Price_TextChanged" MinWidth="70"/>
+
+                        <Label Content="₼"  Foreground="#60686c" FontSize="20" FontFamily="Lucida Console" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="Heavy" Margin="10 0 0 0" Grid.Row="3"/>
+
+                    </StackPanel>
+
+
+
+
+                    <!--#endregion-->
+
+                    <!--#region Count -->
+
+                    <Label Content="Count ~ " Foreground="#60686c" FontSize="20" FontFamily="Lucida Console" Grid.Row="4"
+                      VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Heavy" Margin="10 0"/>
+
+
+                    <TextBox Text="{Binding 
+                        Product.Count,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Foreground="#b3b3b3" FontSize="20" FontFamily="Lucida Console" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" TextWrapping="Wrap" Grid.Row="4"
+                      Name="Count" TextChanged="Count_TextChanged" MinWidth="100"/>
+
+                    <!--#endregion-->
+
+                    <!--#region Description -->
+
+                    <Label Content="Description ~ " Foreground="#60686c" FontSize="20" FontFamily="Lucida Console" Grid.Row="5"
+                      VerticalContentAlignment="Top" HorizontalAlignment="Left" FontWeight="Heavy" Margin="10 0"/>
+
+
+                    <TextBox Text="{Binding Product.Description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Foreground="#b3b3b3" FontSize="20" FontFamily="Lucida Console" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" TextWrapping="Wrap" Grid.Row="5" MaxLength="50"
+                      Name="Description"  MinWidth="200"/>
+                    <!--#endregion-->
+
+
+
+
+                </Grid>
+
+                <!--#endregion-->
+
+                <!--#region Footer-->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center"  HorizontalAlignment="Center">
+                    <Button Style="{StaticResource MaterialDesignPaperDarkButton}" VerticalAlignment="Center"  BorderBrush="SaddleBrown"
+                    Background="Transparent" Foreground="Red" Width="200" Name="Cancel" Command="{Binding Close}" Click="Cancel_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CloseOctagon" VerticalAlignment="Center" />
+                            <TextBlock Margin="15 0">Cancel</TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource MaterialDesignPaperDarkButton}" Margin="20 0"  VerticalAlignment="Center"
+                    Background="Transparent" Foreground="Aqua" Width="200"  Name="Add" Command="{Binding Save}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ContentSave" VerticalAlignment="Center" Foreground="Aqua"/>
+                            <TextBlock Margin="15 0">Save</TextBlock>
+                        </StackPanel>
+                    </Button>
+
+
+
+                </StackPanel>
+
+                <!--#endregion-->
+
+            </Grid>
+
+            <!--#endregion-->
+
+        </Grid>
+    </Border>
+
+</Window>
